@@ -134,15 +134,17 @@ combFreqTables <- function(freq.sens, freq.res, filename){
     if(gene %in% names(freq.sens) & gene %in% names(freq.res)){
       df[gene, 'frequency_sensitive'] <- freq.sens[gene]
       df[gene, 'frequency_resistant'] <- freq.res[gene]
-      df[gene, 'difference'] <- freq.sens[gene] - freq.res[gene]
+      #df[gene, 'difference'] <- freq.sens[gene] - freq.res[gene]
     }else if(gene %in% names(freq.sens)){
       df[gene, 'frequency_sensitive'] <- freq.sens[gene]
-      df[gene, 'difference'] <- freq.sens[gene]
+      #df[gene, 'difference'] <- freq.sens[gene]
     }else{
       df[gene, 'frequency_resistant'] <- freq.res[gene]
-      df[gene, 'difference'] <- freq.res[gene]
+      #df[gene, 'difference'] <- freq.res[gene]
     }
   }
+  #updated method to calculate PF score.
+  df$difference=df$frequency_sensitive - df$frequency_resistant
   df <- df[order(df$difference, decreasing=TRUE),]
   
   write.csv(df, file=filename)
